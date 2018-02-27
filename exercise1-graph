@@ -1,0 +1,10 @@
+digraph {
+	O [label=O]
+	N [label=N]
+	C [label=C]
+	L [label=L]
+	O -> C
+	O -> L
+	N -> C
+	N -> L
+}

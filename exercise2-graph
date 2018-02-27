@@ -1,0 +1,11 @@
+digraph {
+	F [label=F]
+	R [label=R]
+	B [label=B]
+	C [label=C]
+	S [label=S]
+	F -> R
+	F -> B
+	R -> C
+	B -> S
+}
