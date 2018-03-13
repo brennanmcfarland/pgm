@@ -1,10 +1,22 @@
 digraph {
-	O [label=O]
-	N [label=N]
-	C [label=C]
+	V [label=V]
+	D [label=D]
+	A [label=A]
+	E [label=E]
 	L [label=L]
-	O -> C
-	O -> L
-	N -> C
-	N -> L
+	U [label=U]
+	S [label=S]
+	R [label=R]
+	C [label=C]
+	D -> V
+	A -> V
+	E -> V
+	L -> D
+	L -> A
+	U -> L
+	U -> D
+	U -> A
+	C -> U
+	R -> U
+	S -> U
 }
