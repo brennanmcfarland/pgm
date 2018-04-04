@@ -1,0 +1,665 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Homework 3}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \hypertarget{homework-3---larger-graphical-model}{%
+\section{Homework 3 - Larger Graphical
+Model}\label{homework-3---larger-graphical-model}}
+
+    Brennan McFarland\\
+bfm21
+
+    \hypertarget{problem-description}{%
+\subsection{Problem Description}\label{problem-description}}
+
+    Suppose we want to monitor the success of a network packet transmission
+relative to various factors affecting the reliability of the network.
+This information could be used to infer the condition of the network or
+troubleshoot problems based on such limited information as whether the
+packet was successfully transmitted and nothing else.
+
+    \hypertarget{background}{%
+\subsection{Background}\label{background}}
+
+    Our transmission utilizes an acknowledgement-based protocol such as TCP
+where the receiver can acknowledge back to the host which packets it has
+received. This is a widespread technique to increase protocol
+reliability, as the sender can send a duplicate of the original packet
+if it has not received the corresponding acknowledgement within a given
+period of time. Since our network will be affected by the error rate in
+a given transmission, we will also assume that this protocol is either
+not error-correcting or that repeated error-correction is liable to
+decrease the chances of successful packet transmission, for example by
+requiring more data to be sent that could potentially be lost.
+
+    \hypertarget{probability-model}{%
+\subsection{Probability Model}\label{probability-model}}
+
+    For our probability model we will take into account the following
+variables:
+
+\begin{itemize}
+\tightlist
+\item
+  \(V\) : successful packet transmission - binary (P is for probability
+  and we use S and T elsewhere)
+\item
+  \(D\) : number of duplicate packets sent thus far - discrete
+\item
+  \(A\) : time since last packet acknowledgement - discrete (measured in
+  time steps)
+\item
+  \(E\) : packet error rate - discrete (measured in \# errors)
+\item
+  \(L\) : network load - discrete (measured in multiples of packets)
+\item
+  \(U\) : network is up - binary
+\item
+  \(S\) : sender is up - binary
+\item
+  \(R\) : receiver is up - binary
+\item
+  \(C\) : connection between sender and receiver is up - binary
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}25}]:} \PY{k+kn}{from} \PY{n+nn}{graphviz} \PY{k}{import} \PY{n}{Digraph}
+         \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+         \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{image} \PY{k}{as} \PY{n+nn}{imtool}
+         
+         \PY{n}{image\PYZus{}format} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{png}\PY{l+s+s1}{\PYZsq{}}
+         \PY{n}{dot} \PY{o}{=} \PY{n}{Digraph}\PY{p}{(}\PY{n+nb}{format}\PY{o}{=}\PY{n}{image\PYZus{}format}\PY{p}{)}
+         \PY{n}{dot}\PY{o}{.}\PY{n}{node}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{V}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{V}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{dot}\PY{o}{.}\PY{n}{node}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{D}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{D}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{dot}\PY{o}{.}\PY{n}{node}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{A}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{A}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{dot}\PY{o}{.}\PY{n}{node}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{E}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{E}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{dot}\PY{o}{.}\PY{n}{node}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{L}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{L}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{dot}\PY{o}{.}\PY{n}{node}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{U}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{U}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{dot}\PY{o}{.}\PY{n}{node}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{S}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{S}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{dot}\PY{o}{.}\PY{n}{node}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{R}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{R}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{dot}\PY{o}{.}\PY{n}{node}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{C}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{C}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{dot}\PY{o}{.}\PY{n}{edges}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DV}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{AV}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{EV}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{LD}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{LA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{UL}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{UD}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{UA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CU}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{RU}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{SU}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         \PY{n}{path} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{exercise1\PYZhy{}graph}\PY{l+s+s1}{\PYZsq{}}
+         \PY{n}{dot}\PY{o}{.}\PY{n}{render}\PY{p}{(}\PY{n}{path}\PY{p}{)}
+         \PY{n}{imorg} \PY{o}{=} \PY{n}{imtool}\PY{o}{.}\PY{n}{imread}\PY{p}{(}\PY{n}{path} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{image\PYZus{}format}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{off}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{imorg}\PY{p}{)} \PY{c+c1}{\PYZsh{} NOTE: the first time it might not show the image, if it doesn\PYZsq{}t just execute this block again}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}25}]:} <matplotlib.image.AxesImage at 0x7fc26fd9c748>
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_8_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    We define reasonable probabilities for this model when building it in
+the next section.
+
+    \hypertarget{building-the-model-in-python}{%
+\subsection{Building the Model in
+Python}\label{building-the-model-in-python}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k+kn}{from} \PY{n+nn}{pgmpy}\PY{n+nn}{.}\PY{n+nn}{models} \PY{k}{import} \PY{n}{BayesianModel} \PY{k}{as} \PY{n}{bysmodel}
+        \PY{k+kn}{from} \PY{n+nn}{pgmpy}\PY{n+nn}{.}\PY{n+nn}{factors}\PY{n+nn}{.}\PY{n+nn}{discrete} \PY{k}{import} \PY{n}{TabularCPD} \PY{k}{as} \PY{n}{tcpd}
+        \PY{k+kn}{from} \PY{n+nn}{pgmpy}\PY{n+nn}{.}\PY{n+nn}{factors}\PY{n+nn}{.}\PY{n+nn}{continuous} \PY{k}{import} \PY{n}{ContinuousFactor}
+        \PY{k+kn}{import} \PY{n+nn}{scipy}
+        \PY{k+kn}{import} \PY{n+nn}{math}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+\end{Verbatim}
+
+
+    Before we define our model, let us first define a few helper functions
+to quickly generate the corresponding probability distributions,
+beginning with the distribution functions themselves. In cases where we
+are more likely to see a mean value (for example network load) with a
+lesser probability of more or less we use the tried and true binomial
+distribution with a mean adjusted for the range of possible values.\\
+In other cases, we use a distribution whose probability is strictly
+decreasing, ie, the geometric distribution:\\
+\(P(k)=(1-p)^kp\)\\
+Since this distribution has an infinitely large domain (positive
+integers), we restrict it to the possible values of the variable. We
+later normalize to make sure all probabilities sum to exactly 1.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}24}]:} \PY{k}{def} \PY{n+nf}{binom}\PY{p}{(}\PY{n}{w}\PY{p}{,} \PY{n}{n}\PY{p}{,} \PY{n}{p}\PY{p}{)}\PY{p}{:}
+             \PY{k}{if}\PY{p}{(}\PY{n}{w} \PY{o}{\PYZlt{}} \PY{l+m+mi}{0} \PY{o+ow}{or} \PY{n}{w} \PY{o}{\PYZgt{}} \PY{n}{n}\PY{p}{)}\PY{p}{:}
+                \PY{k}{return} \PY{l+m+mi}{0}
+             \PY{c+c1}{\PYZsh{} it stops trying to convert to float before calculating if the numbers are too large}
+             \PY{k}{try}\PY{p}{:}
+                 \PY{k}{return} \PY{n+nb}{float}\PY{p}{(}\PY{n}{math}\PY{o}{.}\PY{n}{factorial}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{n+nb}{float}\PY{p}{(}\PY{n}{math}\PY{o}{.}\PY{n}{factorial}\PY{p}{(}\PY{n}{n}\PY{o}{\PYZhy{}}\PY{n}{w}\PY{p}{)}\PY{o}{*}\PY{n}{math}\PY{o}{.}\PY{n}{factorial}\PY{p}{(}\PY{n}{w}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{p}\PY{o}{*}\PY{o}{*}\PY{n}{w}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{1}\PY{o}{\PYZhy{}}\PY{n}{p}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{p}{(}\PY{n}{n}\PY{o}{\PYZhy{}}\PY{n}{w}\PY{p}{)}\PY{p}{)}
+             \PY{k}{except}\PY{p}{:}
+                 \PY{k}{return} \PY{n}{math}\PY{o}{.}\PY{n}{factorial}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{o}{/}\PY{p}{(}\PY{n}{math}\PY{o}{.}\PY{n}{factorial}\PY{p}{(}\PY{n}{n}\PY{o}{\PYZhy{}}\PY{n}{w}\PY{p}{)}\PY{o}{*}\PY{n}{math}\PY{o}{.}\PY{n}{factorial}\PY{p}{(}\PY{n}{w}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{p}\PY{o}{*}\PY{o}{*}\PY{n}{w}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{1}\PY{o}{\PYZhy{}}\PY{n}{p}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{p}{(}\PY{n}{n}\PY{o}{\PYZhy{}}\PY{n}{w}\PY{p}{)}\PY{p}{)}
+             
+         \PY{k}{def} \PY{n+nf}{geom}\PY{p}{(}\PY{n}{p}\PY{p}{,} \PY{n}{k}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{p}{(}\PY{p}{(}\PY{l+m+mf}{1.0}\PY{o}{\PYZhy{}}\PY{n+nb}{float}\PY{p}{(}\PY{n}{p}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{n+nb}{float}\PY{p}{(}\PY{n}{k}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{n+nb}{float}\PY{p}{(}\PY{n}{p}\PY{p}{)}
+         
+         \PY{k}{def} \PY{n+nf}{pdf\PYZus{}binom}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{n}{p}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{p}{[}\PY{n}{binom}\PY{p}{(}\PY{n}{i}\PY{p}{,} \PY{n}{n}\PY{p}{,} \PY{n}{p}\PY{p}{)} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{]}
+         
+         \PY{c+c1}{\PYZsh{} NOTE: since we don\PYZsq{}t want the distribution going off to infinity, we cut it off at n and normalize later for efficiency}
+         \PY{k}{def} \PY{n+nf}{pdf\PYZus{}geom}\PY{p}{(}\PY{n}{p}\PY{p}{,} \PY{n}{n}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{p}{[}\PY{n}{geom}\PY{p}{(}\PY{n}{p}\PY{p}{,} \PY{n}{k}\PY{p}{)} \PY{k}{for} \PY{n}{k} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{]}
+         
+         \PY{c+c1}{\PYZsh{} return an array for a strictly decreasing discrete distribution}
+         \PY{k}{def} \PY{n+nf}{decreasing\PYZus{}distribution}\PY{p}{(}\PY{n}{numvals}\PY{p}{)}\PY{p}{:}
+             \PY{n}{dist} \PY{o}{=} \PY{n}{pdf\PYZus{}geom}\PY{p}{(}\PY{l+m+mf}{1.0}\PY{o}{/}\PY{n+nb}{float}\PY{p}{(}\PY{n}{numvals}\PY{o}{*}\PY{o}{*}\PY{o}{.}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{,} \PY{n}{numvals}\PY{p}{)}
+             \PY{k}{return} \PY{p}{[}\PY{n}{dist}\PY{p}{]}
+         
+         \PY{c+c1}{\PYZsh{} return an array for a \PYZdq{}regular\PYZdq{}, ie, increasing and then decreasing, discrete distribution}
+         \PY{k}{def} \PY{n+nf}{regular\PYZus{}distribution}\PY{p}{(}\PY{n}{numvals}\PY{p}{)}\PY{p}{:}
+             \PY{n}{dist} \PY{o}{=} \PY{n}{pdf\PYZus{}binom}\PY{p}{(}\PY{n}{numvals}\PY{p}{,} \PY{o}{.}\PY{l+m+mi}{5}\PY{p}{)}
+             \PY{k}{return} \PY{p}{[}\PY{n}{dist}\PY{p}{]}
+\end{Verbatim}
+
+
+    Note that we normalize the distributions because rounding error is
+introduced when we calculate the probabilities in the distribution and
+the sum probability of all possible events given a particular set of
+causes must sum exactly to 1. Normalization of our pdfs is especially
+important because we define the distribution directly rather than via
+log values, which would be more accurate, but either way the pgmpy
+library forces us to validate our distribution. Additionally, if in the
+process of calculating a particular distribution we end up overflowing
+our floats, we fall back to using integer math, which has the side
+effect of introducing more error. Normalizing our distribution at the
+end solves all these problems simultaneously. We then place the range of
+our values into a dictionary and define conveneint functions for
+generating prior and conditional probabilities for our model.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}26}]:} \PY{c+c1}{\PYZsh{} makes sure the values in the distribution all sum exactly to 1}
+         \PY{k}{def} \PY{n+nf}{fix\PYZus{}dist\PYZus{}round\PYZus{}error}\PY{p}{(}\PY{n}{dist}\PY{p}{)}\PY{p}{:}
+             \PY{n}{dist\PYZus{}sum} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{dist}\PY{p}{)}
+             \PY{k}{if} \PY{n}{dist\PYZus{}sum} \PY{o}{\PYZlt{}} \PY{l+m+mf}{1.0}\PY{p}{:}
+                 \PY{n}{was\PYZus{}fixed} \PY{o}{=} \PY{k+kc}{True}
+                 \PY{n}{dist}\PY{p}{[}\PY{n+nb}{len}\PY{p}{(}\PY{n}{dist}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{=} \PY{l+m+mf}{1.0}\PY{o}{\PYZhy{}}\PY{n}{dist\PYZus{}sum} \PY{o}{+} \PY{n}{dist}\PY{p}{[}\PY{n+nb}{len}\PY{p}{(}\PY{n}{dist}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+             \PY{n}{last\PYZus{}nonzero} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{dist}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+             \PY{k}{while} \PY{n}{dist\PYZus{}sum} \PY{o}{\PYZgt{}} \PY{l+m+mf}{1.0}\PY{p}{:}
+                 \PY{n}{was\PYZus{}fixed} \PY{o}{=} \PY{k+kc}{True}
+                 \PY{c+c1}{\PYZsh{} print(dist\PYZus{}sum)}
+                 \PY{n}{dist}\PY{p}{[}\PY{n}{last\PYZus{}nonzero}\PY{p}{]} \PY{o}{=} \PY{n+nb}{max}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{dist}\PY{p}{[}\PY{n}{last\PYZus{}nonzero}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{p}{(}\PY{n}{dist\PYZus{}sum}\PY{o}{\PYZhy{}}\PY{l+m+mf}{1.0}\PY{p}{)}\PY{p}{)}
+                 \PY{n}{last\PYZus{}nonzero} \PY{o}{\PYZhy{}}\PY{o}{=} \PY{l+m+mi}{1}
+                 \PY{n}{dist\PYZus{}sum} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{dist}\PY{p}{)}
+             \PY{k}{if} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{dist}\PY{p}{)} \PY{o}{!=} \PY{l+m+mf}{1.0}\PY{p}{:}
+                 \PY{k}{return} \PY{n}{fix\PYZus{}dist\PYZus{}round\PYZus{}error}\PY{p}{(}\PY{n}{dist}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{dist}\PY{p}{)}\PY{p}{)}
+             \PY{k}{return} \PY{n}{dist}
+         
+         \PY{c+c1}{\PYZsh{} define the range (ie number of possible values) of all variables}
+         \PY{c+c1}{\PYZsh{} the range of all binary variables is 2 values, true or false; we redundantly define them here for clarity}
+         \PY{n}{ranges} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{V}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{S}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{R}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{C}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{U}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{D}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{A}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{10}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{E}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{L}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{10}\PY{p}{\PYZcb{}}
+         
+         \PY{c+c1}{\PYZsh{} prior probability}
+         \PY{c+c1}{\PYZsh{} we normalize because rounding error is introduced when generating the distribution}
+         \PY{k}{def} \PY{n+nf}{ppd}\PY{p}{(}\PY{n}{prior}\PY{p}{,} \PY{n}{distribution}\PY{p}{)}\PY{p}{:}
+             \PY{n}{dist} \PY{o}{=} \PY{n}{tcpd}\PY{p}{(}\PY{n}{variable}\PY{o}{=}\PY{n}{prior}\PY{p}{,}
+                         \PY{n}{variable\PYZus{}card}\PY{o}{=}\PY{n}{ranges}\PY{p}{[}\PY{n}{prior}\PY{p}{]}\PY{p}{,}
+                         \PY{n}{values}\PY{o}{=}\PY{n}{distribution}\PY{p}{(}\PY{n}{ranges}\PY{p}{[}\PY{n}{prior}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+             \PY{n}{dist}\PY{o}{.}\PY{n}{normalize}\PY{p}{(}\PY{p}{)}
+             \PY{k}{return} \PY{n}{dist}
+         
+         \PY{c+c1}{\PYZsh{} conditional probability}
+         \PY{c+c1}{\PYZsh{} we normalize because rounding error is introduced when generating the distribution}
+         \PY{k}{def} \PY{n+nf}{cpd}\PY{p}{(}\PY{n}{distribution}\PY{p}{,} \PY{o}{*}\PY{n}{variables}\PY{p}{)}\PY{p}{:}
+             \PY{n}{dist} \PY{o}{=} \PY{n}{tcpd}\PY{p}{(}\PY{n}{variable}\PY{o}{=}\PY{n}{variables}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{variable\PYZus{}card}\PY{o}{=}\PY{n}{ranges}\PY{p}{[}\PY{n}{variables}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{]}\PY{p}{,}
+                        \PY{n}{evidence}\PY{o}{=}\PY{n}{variables}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]}\PY{p}{,} \PY{n}{evidence\PYZus{}card}\PY{o}{=}\PY{p}{[}\PY{n}{ranges}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{variables}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]}\PY{p}{]}\PY{p}{,}
+                        \PY{n}{values}\PY{o}{=}\PY{n}{distribution}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{prod}\PY{p}{(}\PY{p}{[}\PY{n}{ranges}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{variables}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+             \PY{n}{dist}\PY{o}{.}\PY{n}{normalize}\PY{p}{(}\PY{p}{)}
+             \PY{k}{return} \PY{n}{dist}
+\end{Verbatim}
+
+
+    Defining our model is then just a matter of defining the causal
+relationships between variables and calling the above helpers to
+generate their prior and conditional probability distributions:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}27}]:} \PY{c+c1}{\PYZsh{} define model with connections between variables}
+         \PY{n}{model} \PY{o}{=} \PY{n}{bysmodel}\PY{p}{(}\PY{p}{[}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{D}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{V}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{A}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{V}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{E}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{V}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{L}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{D}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} 
+                           \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{L}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{A}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{U}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{D}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{U}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{L}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{U}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{A}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}
+                           \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{S}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{U}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{R}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{U}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{C}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{U}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}28}]:} \PY{c+c1}{\PYZsh{} define our prior and conditional pdfs}
+         \PY{n}{priorS} \PY{o}{=} \PY{n}{ppd}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{S}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{decreasing\PYZus{}distribution}\PY{p}{)}
+         \PY{n}{priorR} \PY{o}{=} \PY{n}{ppd}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{R}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{decreasing\PYZus{}distribution}\PY{p}{)}
+         \PY{n}{priorC} \PY{o}{=} \PY{n}{ppd}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{C}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{decreasing\PYZus{}distribution}\PY{p}{)}
+         \PY{n}{priorE} \PY{o}{=} \PY{n}{ppd}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{E}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{regular\PYZus{}distribution}\PY{p}{)}
+         \PY{n}{cpdV} \PY{o}{=} \PY{n}{cpd}\PY{p}{(}\PY{n}{decreasing\PYZus{}distribution}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{V}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{D}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{A}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{E}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{cpdA} \PY{o}{=} \PY{n}{cpd}\PY{p}{(}\PY{n}{decreasing\PYZus{}distribution}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{A}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{L}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{U}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{cpdD} \PY{o}{=} \PY{n}{cpd}\PY{p}{(}\PY{n}{regular\PYZus{}distribution}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{D}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{L}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{U}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{cpdL} \PY{o}{=} \PY{n}{cpd}\PY{p}{(}\PY{n}{regular\PYZus{}distribution}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{L}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{U}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{cpdU} \PY{o}{=} \PY{n}{cpd}\PY{p}{(}\PY{n}{decreasing\PYZus{}distribution}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{U}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{S}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{R}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{C}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} add distributions to the model}
+         \PY{n}{model}\PY{o}{.}\PY{n}{add\PYZus{}cpds}\PY{p}{(}\PY{n}{priorS}\PY{p}{,} \PY{n}{priorR}\PY{p}{,} \PY{n}{priorC}\PY{p}{,} \PY{n}{priorE}\PY{p}{,} \PY{n}{cpdV}\PY{p}{,} \PY{n}{cpdA}\PY{p}{,} \PY{n}{cpdD}\PY{p}{,} \PY{n}{cpdL}\PY{p}{,} \PY{n}{cpdU}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{} check consistency}
+         \PY{n}{model}\PY{o}{.}\PY{n}{check\PYZus{}model}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}28}]:} True
+\end{Verbatim}
+            
+    \hypertarget{solving-an-example-problem-comparison-of-methods}{%
+\subsection{Solving an Example Problem: Comparison of
+Methods}\label{solving-an-example-problem-comparison-of-methods}}
+
+    Given this network, let us compare different methods of computing a
+particular conditional probability. Let's suppose we want to figure out
+the most probable network load (\(L\)) given that the sender and
+receiver are both up (\(S,R\)), that 2 duplicate packets have been sent
+thus far (\(D\)) and that packet transmission was successful (\(V\)). In
+short, we want to derive the conditional probability distribution\\
+\(P(L|S,R,D=2,V)\)
+
+    \hypertarget{variable-elimination}{%
+\subsubsection{Variable Elimination}\label{variable-elimination}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}29}]:} \PY{k}{def} \PY{n+nf}{solve\PYZus{}and\PYZus{}display}\PY{p}{(}\PY{n}{solver}\PY{p}{,} \PY{n}{model}\PY{p}{)}\PY{p}{:}
+             \PY{n}{distvals} \PY{o}{=} \PY{p}{(}\PY{n}{solver}\PY{o}{.}\PY{n}{query}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{L}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}
+                               \PY{n}{evidence}\PY{o}{=}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{S}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{R}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{D}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{V}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{l+m+mi}{1}\PY{p}{\PYZcb{}}\PY{p}{)}
+                                          \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{L}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{values}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{ranges}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{L}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{distvals}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}33}]:} \PY{k+kn}{from} \PY{n+nn}{pgmpy}\PY{n+nn}{.}\PY{n+nn}{inference} \PY{k}{import} \PY{n}{VariableElimination}
+         
+         \PY{n}{VESolver} \PY{o}{=} \PY{n}{VariableElimination}\PY{p}{(}\PY{n}{model}\PY{p}{)}
+         \PY{n}{solve\PYZus{}and\PYZus{}display}\PY{p}{(}\PY{n}{VESolver}\PY{p}{,} \PY{n}{model}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_23_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    This is what we would expect, as the sender and receiver being up and
+successful packet transmission is likely to be at the same time as a
+lighter network load, which here has a pdf with a mean around 2 as
+opposed to half its maximum value, 5. The Variable Elimination solver is
+able to derive the resulting distribution in negligible time, making it
+a suitable method of derivation.
+
+    \hypertarget{belief-propagation}{%
+\subsubsection{Belief Propagation}\label{belief-propagation}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}34}]:} \PY{k+kn}{from} \PY{n+nn}{pgmpy}\PY{n+nn}{.}\PY{n+nn}{inference} \PY{k}{import} \PY{n}{BeliefPropagation}
+         
+         \PY{n}{BPSolver} \PY{o}{=} \PY{n}{BeliefPropagation}\PY{p}{(}\PY{n}{model}\PY{p}{)}
+         \PY{n}{BPSolver}\PY{o}{.}\PY{n}{calibrate}\PY{p}{(}\PY{p}{)}
+         \PY{n}{solve\PYZus{}and\PYZus{}display}\PY{p}{(}\PY{n}{BPSolver}\PY{p}{,} \PY{n}{model}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_26_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Similarly, running belief propagation on the model for the same query is
+nearly instantaneous and thus an effective method of deriving
+probabilities given this particular case.
+
+    \hypertarget{bayesian-model-sampling}{%
+\subsubsection{Bayesian Model Sampling}\label{bayesian-model-sampling}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k+kn}{from} \PY{n+nn}{pgmpy}\PY{n+nn}{.}\PY{n+nn}{factors}\PY{n+nn}{.}\PY{n+nn}{discrete} \PY{k}{import} \PY{n}{State}
+        \PY{k+kn}{from} \PY{n+nn}{pgmpy}\PY{n+nn}{.}\PY{n+nn}{sampling} \PY{k}{import} \PY{n}{BayesianModelSampling}
+        \PY{k+kn}{from} \PY{n+nn}{pandas}\PY{n+nn}{.}\PY{n+nn}{core}\PY{n+nn}{.}\PY{n+nn}{frame} \PY{k}{import} \PY{n}{DataFrame}
+        
+        
+        \PY{k}{def} \PY{n+nf}{condProb}\PY{p}{(}\PY{n}{trace}\PY{p}{,} \PY{n}{event}\PY{p}{,} \PY{n}{cond}\PY{p}{)}\PY{p}{:}
+            \PY{k}{if} \PY{n+nb}{type}\PY{p}{(}\PY{n}{trace}\PY{p}{)} \PY{o+ow}{is} \PY{n}{DataFrame}\PY{p}{:}
+                \PY{n}{trace} \PY{o}{=} \PY{n}{trace}\PY{o}{.}\PY{n}{transpose}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{to\PYZus{}dict}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{values}\PY{p}{(}\PY{p}{)}
+            \PY{c+c1}{\PYZsh{} find all samples satisfy conditions}
+            \PY{k}{for} \PY{n}{k}\PY{p}{,} \PY{n}{v} \PY{o+ow}{in} \PY{n}{cond}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                \PY{n}{trace} \PY{o}{=} \PY{p}{[}\PY{n}{smp} \PY{k}{for} \PY{n}{smp} \PY{o+ow}{in} \PY{n}{trace} \PY{k}{if} \PY{n}{smp}\PY{p}{[}\PY{n}{k}\PY{p}{]} \PY{o}{==} \PY{n}{v}\PY{p}{]}
+            \PY{c+c1}{\PYZsh{} record quantity of all samples fulfill condition}
+            \PY{n}{nCondSample} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{trace}\PY{p}{)}
+            \PY{c+c1}{\PYZsh{} find all samples satisfy event}
+            \PY{k}{for} \PY{n}{k}\PY{p}{,} \PY{n}{v} \PY{o+ow}{in} \PY{n}{event}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                \PY{n}{trace} \PY{o}{=} \PY{p}{[}\PY{n}{smp} \PY{k}{for} \PY{n}{smp} \PY{o+ow}{in} \PY{n}{trace} \PY{k}{if} \PY{n}{smp}\PY{p}{[}\PY{n}{k}\PY{p}{]} \PY{o}{==} \PY{n}{v}\PY{p}{]}
+            \PY{c+c1}{\PYZsh{} calculate conditional probability}
+            \PY{k}{return} \PY{n+nb}{len}\PY{p}{(}\PY{n}{trace}\PY{p}{)} \PY{o}{/} \PY{n}{nCondSample}
+        
+        \PY{k}{class} \PY{n+nc}{MonteCarlo}\PY{p}{:}
+            \PY{n}{model} \PY{o}{=} \PY{k+kc}{None}
+            \PY{n}{nsamples} \PY{o}{=} \PY{l+m+mi}{100}\PY{p}{;}
+            \PY{n}{solverComponent} \PY{o}{=} \PY{k+kc}{None}
+            
+            \PY{k}{def} \PY{n+nf}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{bysmodel}\PY{p}{,} \PY{n}{nsamples}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{)}\PY{p}{:}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{model} \PY{o}{=} \PY{n}{bysmodel}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{nsamples} \PY{o}{=} \PY{n}{nsamples}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{solverComponent} \PY{o}{=} \PY{n}{BayesianModelSampling}\PY{p}{(}\PY{n}{model}\PY{p}{)}
+            
+            \PY{c+c1}{\PYZsh{} NOTE: query here only works for 1 query variable, but that\PYZsq{}s fine for this example}
+            \PY{k}{def} \PY{n+nf}{query}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{qvars}\PY{p}{,} \PY{n}{evidence}\PY{p}{)}\PY{p}{:}
+                \PY{n}{qvar} \PY{o}{=} \PY{n}{qvars}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+                \PY{n}{evars} \PY{o}{=} \PY{n}{evidence}
+                \PY{n}{estates} \PY{o}{=} \PY{p}{[}\PY{n}{State}\PY{p}{(}\PY{n}{e}\PY{p}{,} \PY{n}{evars}\PY{p}{[}\PY{n}{e}\PY{p}{]}\PY{p}{)} \PY{k}{for} \PY{n}{e} \PY{o+ow}{in} \PY{n}{evars}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{]}
+                \PY{c+c1}{\PYZsh{} NOTE: this will take a very very long time}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{about to rejection sample...}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                \PY{n}{sample} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{solverComponent}\PY{o}{.}\PY{n}{rejection\PYZus{}sample}\PY{p}{(}
+                    \PY{n}{evidence}\PY{o}{=}\PY{n}{estates}\PY{p}{,}
+                    \PY{n}{size}\PY{o}{=}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{nsamples}\PY{p}{)}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{rejection sample complete}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                \PY{k}{return} \PY{p}{[}\PY{n}{condProb}\PY{p}{(}\PY{n}{sample}\PY{p}{,} \PY{p}{\PYZob{}}\PY{n}{qvar} \PY{p}{:} \PY{n}{val}\PY{p}{\PYZcb{}}\PY{p}{,} \PY{n}{evars}\PY{p}{)} \PY{k}{for} \PY{n}{val} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{ranges}\PY{p}{[}\PY{n}{qvar}\PY{p}{]}\PY{p}{)}\PY{p}{]}
+            
+        
+        \PY{n}{MCSolver} \PY{o}{=} \PY{n}{MonteCarlo}\PY{p}{(}\PY{n}{model}\PY{p}{)}
+        \PY{n}{solve\PYZus{}and\PYZus{}display}\PY{p}{(}\PY{n}{MCSolver}\PY{p}{,} \PY{n}{model}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+about to rejection sample{\ldots}
+
+    \end{Verbatim}
+
+    Note that this method takes noticably longer than the other two when
+calculating the conditional probability distribution, and so is probably
+not an effective means of deriving probability distributions for the
+case of this particular model.
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
