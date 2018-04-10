@@ -1,36 +1,26 @@
+import copy
 import numpy as np
 from scipy.stats import multivariate_normal
 # from scikit-learn.preprocessing import normalize
 
 # calculate the expectation using the following formula:
 # note: it's NOT the mean, but the probabilities of each data point being in a given class
-# u[k] = Σ[n] p[n,k]x^(n)/p[k]
 # p[n,k] = p(c[k]|x^(n),θ[1:K])
 # the contents of data and gmm are:
 # data is an array of datapoints (also arrays, with 2 elements)
 # gmm = [{'mean': mu[m], 'covariance': sigma[m], 'prior': 1.0/ngmm} for m in range(ngmm)]
-# TODO: the means blow up really fast, why? also the first and second entries are always the same
 def expectation(data, gmm):
-    # sigma = [m['covariance'] for m in gmm] # an array
-    # print(gmm[0]['prior'])
+    #print(gmm)
     p_n_k = []
     p_n_k.append(gmm[0]['prior'])
     p_n_k.append(gmm[1]['prior'])
-    # p_n_k = [m['prior'] for m in gmm]
     x = data
     p_k = [np.sum(p_n_k[0]), np.sum(p_n_k[1])]
-    #print(p_n_k) # one array of size 2
-    #print(x) # a whole lotta arrays of size 2
-    # print(p_k) # a number, 1, apparently?
     u = []
     posterior = [[gmm[0]['prior'], gmm[1]['prior']] for n in data]
-
     # new textbook page 425
-    # x is a vector
-    # so is mu, etc
-
-    posteriors = []
     # scipy multivariate normal (the denominator part factors out - normalizing constant is also sum of gaussians)
+    posteriors = []
     for n in range(len(data)):
         posteriors.append([])
         for k in range(len(gmm)):
@@ -41,36 +31,60 @@ def expectation(data, gmm):
         posteriors[n] = [i/normalizing_constant for i in posteriors[n]]
     return posteriors
 
-    # for k in range(len(data[0])):
-        #print(p_n_k[0])
-        #print(x[0][0])
-        #print(p_k[0])
-        # u0 = np.sum([p_n_k[0]*x[n][0]/p_k[0] for n in range(len(data))])
-        # u1 = np.sum([p_n_k[1]*x[n][1]/p_k[1] for n in range(len(data))])
-        # u.append([u0, u1])
-    # return u
 
-
-# update the mean, covariance, and class prior for each class?
+# update the mean, covariance, and class prior for each class
 def maximization(posterior, data, gmm):
-    return maximization_mean(posterior, data, gmm)
-    # n['covariance'] = covariance[n] # TODO: actually update the covarianceu0 = [np.sum(p_n_k[0]*x[n]/p_k) for n in range(len(data))]
+    print(gmm)
+    x = data
+    gmm = maximization_mean(posterior, data, gmm)
+    # NOTE: may be reusing k for both number of classes and dimensions, elsewhere too?
+    # there's 3 levels of nesting: the covariance matrix itself (k),
+    # the dimension of the datapoints (d),
+    # and the dimension of the covariance (c)
+    # but how to get the individual vals of the covariance matrix?
+    covariances = []
+    for k in range(len(gmm)):
+        covariances_k = []
+        for d in range(len(data[0])):
+            #covariance = 0
+            covariance_0 = [0,0]
+            covariance_1 = [0,0]
+            for n in range(len(data)):
+                # covariance += multivariate_normal.pdf(x[n], mean=gmm[k]['mean'], cov=gmm[k]['covariance'])
+                covariance_0 = [c + () for c in covariance[0]]
+                covariance_1 = [c + () for c in covariance[1]]
+            covariances_k.append(covariance)
+        # TODO: this is not right, just copying the values, but why is there that extra level of nesting?
+        # of course this doesn't even work for testing because the matrix is not invertible
+        cov_tmp = []
+        cov_tmp.append(copy.deepcopy(covariances_k))
+        cov_tmp.append(copy.deepcopy(covariances_k))
+        #gmm[k]['covariance'] = np.array(cov_tmp)
+        gmm[k]['covariance'] = np.array(copy.deepcopy(covariances_k))
+        covariances.append(covariances_k)
+    print(covariances)
+    print(gmm)
+    # TODO: actually update covariance and class prior
+    return gmm
+    # n['covariance'] = covariance[n] # 0 = [np.sum(p_n_k[0]*x[n]/p_k) for n in range(len(data))]
 
-
+# update just the mean for each class
+# u[k] = Σ[n] p[n,k]x^(n)/p[k]
 def maximization_mean(posterior, data, gmm):
-    # print("old gmm: ", gmm)
-    # print("posterior: ", posterior)
-    # update mean
-
-    # mean = expectation(data, gmm)
-    # for n in range(len(gmm)):
-    #     gmm[n]['mean'] = mean[n]
-    # print("new mean: ", mean)
-    # update class prior
-    # for n in range(len(gmm)):
-    #     gmm[n]['prior'] = posterior[n][0] # TODO: this isn't right, why is posterior a nested array?
-    # print("new prior: ", posterior)
-    # print("new gmm: ", gmm)
+    means = []
+    for k in range(len(gmm)):
+        # means.append[]
+        mean = 0
+        p_k = 0
+        for n in range(len(data)):
+            x_n = data[n]
+            p_n_k = posterior[n][k]
+            p_k += p_n_k
+            mean += p_n_k*x_n
+        mean /= p_k
+        means.append(mean)
+        gmm[k]['mean'] = copy.deepcopy(mean)
+    # print(means)
     return gmm
 
 # NOTE: scikit learn has pca algorithms
