@@ -1,2 +1,3 @@
 # ignore the checkpoint folder
 .ipynb_checkpoints/*
+.idea/*
