@@ -16,25 +16,25 @@ import math
 # calculate recovered source sound tracks with final mixing matrix
 # return mixing matrix and recovered source sound tracks
 def bss(data):
-    print("original data: ", data)
+    #print("original data: ", data)
     # initialize an identity matrix as your intial mixing matrix
     mixingA = np.identity(len(data)) # dimension = m, might need to be n instead, but i think this is right
-    print("original mixing matrix: ", mixingA)
+    #print("original mixing matrix: ", mixingA)
     # TODO: replace this with a better stop criterion, this is just for testing
     i = 0
-    while (i < 2):
+    while (i < 200):
         # calculate source signals with current mixing matrix
         signalA = unmix_signals(mixingA, data)
-        print("signal: ", signalA)
+        #print("signal: ", signalA)
         # calculate the mixing matrix gradient
         # gradA = -A(zs^T-I)
         # z = (log P(s))'
         signals = [signal for signal in signalA] # [] of si
-        gradA = signal_gradient(mixingA, signalA)
+        gradA = signal_gradient(mixingA, data)
         # update the mixing matrix with the gradient multiplied by step size
         step_size = .1
         mixingA += step_size*gradA
-        print("unmixed: ", unmix_signals(mixingA, data))
+        #print("unmixed: ", unmix_signals(mixingA, data))
         i += 1
     # recover the original sources
     recovered_data = unmix_signals(mixingA, data)
@@ -45,7 +45,7 @@ def bss(data):
 # z is the derivative of the log pdf of the generalized gaussian, that's what we're missing
 # how are we supposed to get P(s_i) from the generalized Gaussian?  how does that relate to the data
 # we have?
-def signal_gradient(mixingA, signalA):
+def signal_gradient(mixingA, mixedA):
     q = 1 # since we're assuming laplace distribution
     #psis = []
     #psi_funcs = []
@@ -88,11 +88,21 @@ def signal_gradient(mixingA, signalA):
     #x = sym.symbols('x')
     # z = sym.diff(integ_z(x),x)
     sigma = math.sqrt(.5)
-    z = lambda x: -math.sqrt(2)*x/sigma*abs(x) # TODO: put math derivation in notebook
-    print("test of z: ", z(.3))
+    zfunc = lambda x: -math.sqrt(2)*x/sigma*abs(x) # TODO: put math derivation in notebook
+
+    signalA = unmix_signals(mixingA, mixedA)
+
+    # NOTE: z is a 2xn matrix, like x and s
+    z = np.array([np.array([zfunc(xs) for xs in x]) for x in signalA])
+    #z = np.array([np.array([-np.sign(xs) for xs in x]) for x in signalA])
+    z = -np.sign(signalA)
+    #z = np.apply_over_axes(zfunc,signalA,(0,1))
+
+    #print("test of z: ", z)
     # THIS CAN'T BE MIXINGA, because it's a diagonal matrix and so result will always be scaled std basis vectors
-    z_of_st = np.apply_along_axis(z, 1, np.transpose(mixingA)) #TODO: this should probably be mixingA, but then we're not using signalA at all, which doesn't make sense
-    print("zst", z_of_st)
+    #z_of_st = np.apply_along_axis(z, 1, np.transpose(mixingA)) #TODO: this should probably be mixingA, but then we're not using signalA at all, which doesn't make sense
+    z_of_st = np.matmul(z, np.transpose(signalA))
+    #print("zst", z_of_st)
     #ps_func = lambda xs: func_prod(psi_funcs, xs)# make the product of all the psi functions a function
     #zfunc1 = lambda x: sym.diff(sym.log(ps_func(x)))
     #zfunc = lambda xs: zfunc1(ps_func(xs))
@@ -107,9 +117,9 @@ def signal_gradient(mixingA, signalA):
     #print("zst: ", zst) # TODO: it's 0?  why?
     #return -np.matmul(mixingA, zst - np.identity(np.shape(zst)[0]))
     ident = np.identity(np.shape(z_of_st)[0])
-    temp = z_of_st - ident
-    print("mixingA: ", mixingA)
-    print("temp: ", temp)
+    temp = z_of_st + ident
+    #print("mixingA: ", mixingA)
+    #print("temp: ", temp)
     # it's necessary to convert because sympy turns it into an object array
     neg_gradA = np.matmul(mixingA.astype(float), temp.astype(float))
     print("neg_gradA: ", neg_gradA)
